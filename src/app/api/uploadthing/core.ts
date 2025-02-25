@@ -21,7 +21,7 @@ export const ourFileRouter = {
         
         await db.collection("images").insertOne({
           imageUrl: file.url,
-          uploadedAt: new Date(metadata.timestamp),
+          uploadedAt: metadata.timestamp,
           createdAt: new Date()
         });
 

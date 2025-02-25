@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 interface ImageCardProps {
   imageUrl: string;
-  uploadedAt: Date;
+  uploadedAt: string;
 }
 
 export default function ImageCard({ imageUrl, uploadedAt }: ImageCardProps) {
