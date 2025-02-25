@@ -12,7 +12,7 @@ export default function ImageUploader() {
         <h2 className="text-2xl font-bold mb-4 text-center">Upload Trading Chart</h2>
         <UploadDropzone
           endpoint="imageUploader"
-          onClientUploadComplete={(res) => {
+          onClientUploadComplete={() => {
             router.refresh(); // Refresh the page to show new upload
             alert("Upload completed successfully!");
           }}

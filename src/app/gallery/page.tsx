@@ -1,4 +1,13 @@
 import { Container, Grid, Heading } from "@radix-ui/themes";
+import { Document, ObjectId, WithId } from "mongodb";
+
+interface ImageDocument extends Document {
+  _id: ObjectId;
+  imageUrl: string;
+  uploadedAt: string;
+  createdAt: Date;
+}
+
 import Navigation from "@/components/Navigation";
 import ImageCard from "@/components/ImageCard";
 import clientPromise from "@/lib/mongodb";
@@ -9,7 +18,7 @@ async function getImages() {
   try {
     const client = await clientPromise;
     const db = client.db("trading-journal");
-    const images = await db.collection("images")
+    const images = await db.collection<ImageDocument>("images")
       .find({})
       .sort({ createdAt: -1 })
       .toArray();
@@ -31,7 +40,7 @@ export default async function Gallery() {
           Trading Charts Gallery
         </Heading>
         <Grid columns={{ initial: "1", sm: "2", md: "3" }} gap="4">
-          {images.map((image: any) => (
+          {images.map((image: WithId<ImageDocument>) => (
             <ImageCard
               key={image._id.toString()}
               imageUrl={image.imageUrl}
