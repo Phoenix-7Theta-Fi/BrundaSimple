@@ -69,10 +69,13 @@ async function getImages(startDate?: string, endDate?: string) {
 }
 
 export default async function Gallery({
-  searchParams: { startDate, endDate }
+  searchParams
 }: {
-  searchParams: { [key: string]: string | string[] | undefined }
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }> | { [key: string]: string | string[] | undefined }
 }) {
+  const resolvedParams = await Promise.resolve(searchParams);
+  const { startDate, endDate } = resolvedParams;
+
   const images = await getImages(
     startDate as string | undefined,
     endDate as string | undefined
