@@ -14,22 +14,8 @@ export const ourFileRouter = {
     .middleware(async () => {
       return { timestamp: new Date().toISOString() };
     })
-    .onUploadComplete(async ({ metadata, file }) => {
-      try {
-        const client: MongoClient = await clientPromise;
-        const db = client.db("trading-journal");
-        
-        await db.collection("images").insertOne({
-          imageUrl: file.url,
-          uploadedAt: metadata.timestamp,
-          createdAt: new Date()
-        });
-
-        return { url: file.url };
-      } catch (err) {
-        console.error("Error saving to MongoDB:", err);
-        throw new Error("Failed to save image data");
-      }
+    .onUploadComplete(async ({ file }) => {
+      return { url: file.url };
     }),
 } satisfies FileRouter;
 
