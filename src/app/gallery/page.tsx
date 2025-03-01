@@ -10,13 +10,6 @@ interface ImageDocument extends Document {
   createdAt: Date;
 }
 
-interface PageProps {
-  searchParams?: {
-    startDate?: string;
-    endDate?: string;
-  };
-}
-
 import Navigation from "@/components/Navigation";
 import ImageCard from "@/components/ImageCard";
 import DateRangePicker from "@/components/DateRangePicker";
@@ -74,21 +67,10 @@ async function getImages(startDate?: string, endDate?: string) {
   }
 }
 
-export default async function Gallery({
-  searchParams = {}
-}: PageProps) {
-  // Convert searchParams to a regular object to avoid the async issue
-  const params = {
-    startDate: String(searchParams.startDate || ''),
-    endDate: String(searchParams.endDate || '')
-  };
-
-  const images = await getImages(
-    params.startDate || undefined,
-    params.endDate || undefined
-  );
+export default async function Gallery() {
+  const images = await getImages();
   
-  const hasDateFilter = params.startDate || params.endDate;
+  const hasDateFilter = false;
 
   return (
     <>
