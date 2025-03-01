@@ -1,5 +1,5 @@
 import { Document, ObjectId, WithId } from "mongodb";
-import { parseISO, startOfDay, endOfDay } from 'date-fns';
+import { parseISO, startOfDay } from 'date-fns';
 import { toDate } from 'date-fns-tz';
 
 interface ImageDocument extends Document {
@@ -25,11 +25,12 @@ async function getImages(startDate?: string, endDate?: string) {
     let query = {};
     if (startDate || endDate) {
       // Parse dates and set proper day boundaries using date-fns with timezone
+      // Convert dates to start of day in Asia/Kolkata timezone to match storage format
       const start = startDate ? 
         startOfDay(toDate(parseISO(startDate), { timeZone: 'Asia/Kolkata' })) : 
         null;
       const end = endDate ? 
-        endOfDay(toDate(parseISO(endDate), { timeZone: 'Asia/Kolkata' })) : 
+        startOfDay(toDate(parseISO(endDate), { timeZone: 'Asia/Kolkata' })) : 
         null;
 
       query = {
@@ -67,10 +68,16 @@ async function getImages(startDate?: string, endDate?: string) {
   }
 }
 
-export default async function Gallery() {
-  const images = await getImages();
-  
-  const hasDateFilter = false;
+export default async function Gallery({
+  searchParams: { startDate, endDate }
+}: {
+  searchParams: { [key: string]: string | string[] | undefined }
+}) {
+  const images = await getImages(
+    startDate as string | undefined,
+    endDate as string | undefined
+  );
+  const hasDateFilter = !!(startDate || endDate);
 
   return (
     <>
