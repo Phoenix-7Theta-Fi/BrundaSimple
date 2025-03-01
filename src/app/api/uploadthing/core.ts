@@ -1,6 +1,4 @@
 import { createUploadthing, type FileRouter } from "uploadthing/next";
-import clientPromise from "@/lib/mongodb";
-import { MongoClient } from "mongodb";
 
 const f = createUploadthing();
 
