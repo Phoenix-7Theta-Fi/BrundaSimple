@@ -2,8 +2,6 @@ import { Document, ObjectId, WithId } from "mongodb";
 import { parseISO, startOfDay } from 'date-fns';
 import { toDate } from 'date-fns-tz';
 
-import type { SearchParams } from 'next/navigation'
-
 interface ImageDocument extends Document {
   _id: ObjectId;
   imageUrl: string;
@@ -73,7 +71,7 @@ async function getImages(startDate?: string, endDate?: string) {
 export default async function Gallery({
   searchParams = {}
 }: {
-  searchParams?: SearchParams
+  searchParams?: { [key: string]: string | string[] | undefined }
 }) {
   const startDate = searchParams.startDate as string | undefined;
   const endDate = searchParams.endDate as string | undefined;
