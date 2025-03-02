@@ -69,9 +69,9 @@ async function getImages(startDate?: string, endDate?: string) {
 }
 
 export default async function Page({
-  searchParams,
+  searchParams = {}
 }: {
-  searchParams?: { [key: string]: string | string[] | undefined }
+  searchParams: { [key: string]: string | string[] | undefined }
 }) {
   const startDate = searchParams.startDate as string | undefined;
   const endDate = searchParams.endDate as string | undefined;
