@@ -69,10 +69,8 @@ async function getImages(startDate?: string, endDate?: string) {
 }
 
 export default async function Gallery({
-  params,
   searchParams = {}
 }: {
-  params: Record<string, never>
   searchParams: { [key: string]: string | string[] | undefined }
 }) {
   const startDate = searchParams.startDate as string | undefined;
