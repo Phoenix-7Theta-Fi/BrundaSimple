@@ -1,6 +1,10 @@
 import { Document, ObjectId, WithId } from "mongodb";
 import { parseISO, startOfDay } from 'date-fns';
 import { toDate } from 'date-fns-tz';
+import Navigation from "@/components/Navigation";
+import ImageCard from "@/components/ImageCard";
+import DateRangePicker from "@/components/DateRangePicker";
+import clientPromise from "@/lib/mongodb";
 
 interface ImageDocument extends Document {
   _id: ObjectId;
@@ -10,10 +14,6 @@ interface ImageDocument extends Document {
   createdAt: Date;
 }
 
-import Navigation from "@/components/Navigation";
-import ImageCard from "@/components/ImageCard";
-import DateRangePicker from "@/components/DateRangePicker";
-import clientPromise from "@/lib/mongodb";
 
 export const dynamic = "force-dynamic";
 
@@ -68,10 +68,10 @@ async function getImages(startDate?: string, endDate?: string) {
   }
 }
 
-export default async function Gallery({
-  searchParams = {}
+export default async function Page({
+  searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined }
+  searchParams?: { [key: string]: string | string[] | undefined }
 }) {
   const startDate = searchParams.startDate as string | undefined;
   const endDate = searchParams.endDate as string | undefined;
